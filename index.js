@@ -20,7 +20,10 @@ io.on('connection', function (socket) {
     } else {
       socket.join(stream);
       socket.emit('joined', stream);
-      io.in(stream).emit('join', socket.id);
+      // io.in(stream).emit('join', socket.id);
+      arr = Object.keys(io.in(stream).clients().connected)
+      randomClient = arr[Math.floor(Math.random()*arr.length)];
+      io.to(randomClient).emit('join', socket.id);
       console.log('join ' + socket.id);
     }
   });
